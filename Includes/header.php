@@ -34,7 +34,6 @@ $title = ucwords($title);
             <li><a href="rent_cost.php">Rental Cost</a></li>
             <li><a href="about.php">About Us</a></li>
             <li><a href="contact.php">Contact</a></li>
-            <li><a href="login.php">Admin</a></li>
         </ul>
     </div>
 </nav>

@@ -478,7 +478,6 @@ body {
 .rent-cost-results-container {
   width: 80%;
   margin: auto;
-  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -534,7 +533,6 @@ body {
   justify-content: center;
   text-align: center;
   height: 50%;
-
 }
 .about-container-2 h3 {
   font-style: 900;

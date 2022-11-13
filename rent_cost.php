@@ -1,6 +1,5 @@
 <?php
 include('./Includes/header.php');
-
 ?>
 
 <div class="our-cars-image-container beginStickyNav">
@@ -45,47 +44,44 @@ include('./Includes/header.php');
     </div>
     <div class="rent-cost-calculator-container">
         <div class="rent-form-container">
-            <form id="rent-form" action="rent_cost.php" method="POST">
+            <form id="rent-form">
                 <label for="age">Ηλικία Οδηγού</label></span>
-                <input id="age" type="number" name="age" placeholder="Age ...">
+                <input required id="age" type="number" name="age" placeholder="Age ...">
                 <label for="cubic">Κυβικά Αυτοκινήτου</label>
-                <input id="cubic" type="number" name="cubic" placeholder="Cubic ...">
+                <input required id="cubic" type="number" name="cubic" placeholder="Cubic ...">
                 <label for="">Ημέρες προς Ενοικίαση</label>
-                <input id="day" type="number" name="day" placeholder="Days ...">
+                <input required id="day" type="number" name="day" placeholder="Days ...">
                 <input id="submitBtn" type="submit" name="submit" value="Calculate Rental Cost">
             </form>
         </div>
         <div class="rent-cost-results-container">
-            <?php if (isset($_POST['submit'])) {
-                include('./Includes/functions.php');
-            ?>
-                <h2>Ασφάλιστρα:</h2> <span><?php echo calcInsurance($cubic, $age) ?>&euro;</span>
-                <h2>Ενοικίαση:</h2> <span><?php echo calcRent($cubic, $day) ?>&euro;</span>
-                <h2>Τελικό Ποσό:</h2> <span><?php echo totalcost($age, $cubic, $day) ?>&euro;</span>
-            <?php } ?>
+
+            <!-- <h2>Insurance:</h2> <span class="insurance"></span>
+            <h2>Rent:</h2> <span class="rent"></span>
+            <h2>Final Amount:</h2> <span class="amount"></span> -->
         </div>
     </div>
 </div>
-
 <?php include('./Includes/footer.php'); ?>
 
 <script src="./Js/navbar.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="./Includes/functions.js"></script>
 <script>
-    const age = document.getElementById('age');
-    const cubic = document.getElementById('cubic');
-    const day = document.getElementById('day');
+    let age = document.getElementById('age');
+    let cubic = document.getElementById('cubic');
+    let day = document.getElementById('day');
     const rentForm = document.getElementById('rent-form');
 
-    rentForm.addEventListener('submit', function(e) {
-        if (cubic.value == "" || age.value == "" || day.value == "") {
-            e.preventDefault();
-            cubic.placeholder = "Please Insert a value";
-            day.placeholder = "Please Insert a value";
-            age.placeholder = "Please Insert a value";
-        } else
-        if (cubic.value < 0 || age.value < 0 || day.value < 0) {
-            e.preventDefault();
-        }
+    $('#rent-form').on('submit', function(e) {
+        e.preventDefault();
+        $('.rent-cost-results-container').append(`
+         <h2>Insurance:</h2> <span class="insurance">${calcInsurance(cubic.value,age.value)} \&#x20AC;</span>
+            <h2>Rent:</h2> <span class="rent">${calculateRent(day.value,cubic.value)} \&#x20AC;</span>
+            <h2>Final Amount:</h2> <span class="amount">${Math.round(calcInsurance(cubic.value,age.value) + calculateRent(day.value,cubic.value))} \&#x20AC;</span>
+        `)
+        $("#rent-form")[0].reset();
+
     })
 </script>
 </body>
